@@ -50,10 +50,10 @@ public class Function
     public async Task FunctionHandler(S3Event evnt, ILambdaContext context)
     {
         context.Logger.LogLine("Function Started");
-        string srcBucket = Environment.GetEnvironmentVariable("srcbucket") ?? @"prod-shared-infra-sftp";
-        string srcFolder = Environment.GetEnvironmentVariable("srcfolder") ?? @"ClearCourse/Merchant-Onboarding/Complete/";
-        string destBucket = Environment.GetEnvironmentVariable("destbucket") ?? @"prod-shared-infra-sftp";
-        string destFolder = Environment.GetEnvironmentVariable("destfolder") ?? @"Novuna/Supporting Documents/";
+        string srcBucket = Environment.GetEnvironmentVariable("srcbucket") ?? @"myS3Bucket";
+        string srcFolder = Environment.GetEnvironmentVariable("srcfolder") ?? @"/";
+        string destBucket = Environment.GetEnvironmentVariable("destbucket") ?? @"myS3Bucket";
+        string destFolder = Environment.GetEnvironmentVariable("destfolder") ?? @"/Completed/";
         string copyFile = Environment.GetEnvironmentVariable("copyfile") ?? @"true";
         string moveFileInsteadofDelete = Environment.GetEnvironmentVariable("delorgfile") ?? @"false";
         string slackfile = Environment.GetEnvironmentVariable("slackfile") ?? @"false";
@@ -224,6 +224,6 @@ public class Function
         }
     }
 }
-// dotnet lambda deploy-function ClearCourseS3Function --function-role ClearCourseS3Function-role-jqspebj4
-// aws s3api put-bucket-notification-configuration --bucket=prod-shared-infra-sftp --notification-configuration="{}"
+// dotnet lambda deploy-function S3Notification --function-role IAM-role-name
+// aws s3api put-bucket-notification-configuration --bucket=my-s3-bucket --notification-configuration="{}"
 //RegEx folder and file name match: @"/\/(?=[^\/]*(?=\/(?=[^\/]*(?=\.(?![^\/]*(?=\/))))))(.*)/gm"
